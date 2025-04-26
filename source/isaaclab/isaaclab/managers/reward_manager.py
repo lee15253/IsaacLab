@@ -56,8 +56,12 @@ class RewardManager(ManagerBase):
         super().__init__(cfg, env)
         # prepare extra info to store individual reward term information
         self._episode_sums = dict()
+        self._episode_orig_value = dict()
         for term_name in self._term_names:
             self._episode_sums[term_name] = torch.zeros(self.num_envs, dtype=torch.float, device=self.device)
+            self._episode_orig_value[term_name] = torch.zeros(self.num_envs, dtype=torch.float, device=self.device)
+        
+        
         # create buffer for managing reward per environment
         self._reward_buf = torch.zeros(self.num_envs, dtype=torch.float, device=self.device)
 
